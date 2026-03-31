@@ -1,0 +1,156 @@
+.incident-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.incident-header h3 {
+  margin: 0;
+  flex: 1;
+}
+
+.incident-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.severity-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.severity-high {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+}
+
+.severity-medium {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fcd34d;
+}
+
+.severity-low {
+  background: rgba(59, 130, 246, 0.1);
+  color: #93c5fd;
+}
+
+.status-resolved {
+  background: rgba(16, 185, 129, 0.1);
+  color: #6ee7b7;
+}
+
+.status-in-progress {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fcd34d;
+}
+
+.status-documented {
+  background: rgba(59, 130, 246, 0.1);
+  color: #93c5fd;
+}
+
+.incident-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--dark-border);
+  border-bottom: 1px solid var(--dark-border);
+  font-size: 13px;
+  color: var(--secondary-text);
+}
+
+.incident-details div {
+  display: flex;
+  gap: 8px;
+}
+
+.incident-details strong {
+  color: var(--light-text);
+  min-width: 80px;
+}
+
+.incident-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.incidents-list {
+  margin-top: 24px;
+}
+
+.form-card {
+  margin-bottom: 24px;
+}
+
+.detail-card {
+  margin-bottom: 24px;
+  animation: slideIn 0.3s ease;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.detail-header h3 {
+  margin: 0;
+  flex: 1;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.detail-row strong {
+  color: var(--light-text);
+  min-width: 100px;
+}
+
+.detail-row span {
+  color: var(--secondary-text);
+  flex: 1;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

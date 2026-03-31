@@ -1,0 +1,68 @@
+.access-list {
+  margin-top: 24px;
+}
+
+.access-list h2 {
+  margin-bottom: 16px;
+}
+
+.access-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.access-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.access-header h3 {
+  margin: 0;
+  flex: 1;
+}
+
+.access-level {
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(0, 102, 204, 0.1);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.access-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--dark-border);
+  border-bottom: 1px solid var(--dark-border);
+  font-size: 13px;
+  color: var(--secondary-text);
+}
+
+.access-details div {
+  display: flex;
+  gap: 8px;
+}
+
+.access-details strong {
+  color: var(--light-text);
+  min-width: 100px;
+}
+
+.update-card {
+  margin-bottom: 24px;
+}
+
+.selected-person {
+  padding: 12px;
+  background: rgba(0, 102, 204, 0.05);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}

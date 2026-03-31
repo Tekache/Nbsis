@@ -1,0 +1,112 @@
+.personnel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.personnel-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.personnel-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.personnel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.personnel-header h3 {
+  margin: 0;
+  flex: 1;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.status-active {
+  background: rgba(16, 185, 129, 0.1);
+  color: #6ee7b7;
+}
+
+.status-on-leave {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fcd34d;
+}
+
+.status-inactive {
+  background: rgba(107, 114, 128, 0.1);
+  color: #d1d5db;
+}
+
+.personnel-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--dark-border);
+  border-bottom: 1px solid var(--dark-border);
+  font-size: 13px;
+  color: var(--secondary-text);
+}
+
+.personnel-details div {
+  display: flex;
+  gap: 8px;
+}
+
+.personnel-details strong {
+  color: var(--light-text);
+  min-width: 80px;
+}
+
+.personnel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.personnel-actions button {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.form-card {
+  margin-bottom: 24px;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.content-header h2 {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .personnel-list {
+    grid-template-columns: 1fr;
+  }
+}

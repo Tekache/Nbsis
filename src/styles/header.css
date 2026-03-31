@@ -1,0 +1,21 @@
+.header {
+  padding: 32px 24px;
+  border-bottom: 1px solid var(--dark-border);
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, transparent 100%);
+}
+
+.header-content {
+  animation: slideDown 0.5s ease;
+}
+
+.header-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--light-text);
+  margin-bottom: 8px;
+}
+
+.header-subtitle {
+  font-size: 14px;
+  color: var(--secondary-text);
+}
