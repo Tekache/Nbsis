@@ -39,6 +39,7 @@ Render settings:
 
 - Root Directory: `backend`
 - Runtime: `Python 3`
+- Python Version: `3.12` via [backend/.python-version](C:/Users/USER/OneDrive/Desktop/nbsis/backend/.python-version)
 - Build Command: `pip install -r requirements.txt`
 - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 - Instance Type: `Free`
