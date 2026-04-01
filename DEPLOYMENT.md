@@ -41,8 +41,10 @@ Render settings:
 - Runtime: `Python 3`
 - Python Version: `3.12` via [backend/.python-version](C:/Users/USER/OneDrive/Desktop/nbsis/backend/.python-version)
 - Build Command: `pip install -r requirements.txt`
-- Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 - Instance Type: `Free`
+
+If Render shows a default command like `gunicorn your_application.wsgi`, replace it manually in the service settings before redeploying.
 
 Backend environment variables:
 
@@ -72,7 +74,7 @@ Frontend environment variable:
 
 - `VITE_API_BASE_URL=https://your-backend.onrender.com/api`
 
-Then redeploy the frontend after the env var is added.
+Then redeploy the frontend after the env var is added. If the deployed site still shows requests to `http://localhost:8000/api`, the old build is still live and you need a fresh Vercel redeploy.
 
 ## Step 4: Update backend CORS
 
