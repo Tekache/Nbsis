@@ -1,6 +1,22 @@
-const API_BASE_URL =
-  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) ||
-  'http://localhost:8000/api'
+const LOCAL_API_BASE_URL = 'http://localhost:8000/api'
+const DEPLOYED_API_BASE_URL = 'https://nbsis.onrender.com/api'
+
+const resolveApiBaseUrl = () => {
+  if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL
+  }
+
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return LOCAL_API_BASE_URL
+    }
+  }
+
+  return DEPLOYED_API_BASE_URL
+}
+
+const API_BASE_URL = resolveApiBaseUrl()
 
 const getAuthUser = () => {
   try {
