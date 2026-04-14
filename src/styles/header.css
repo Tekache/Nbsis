@@ -19,3 +19,18 @@
   font-size: 14px;
   color: var(--secondary-text);
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 16px;
+  }
+
+  .header-title {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .header-subtitle {
+    font-size: 13px;
+  }
+}

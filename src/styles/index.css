@@ -16,6 +16,10 @@
   --dark-border: #334155;
   --light-text: #f1f5f9;
   --secondary-text: #cbd5e1;
+  --control-bg: #111c31;
+  --control-bg-hover: #16233d;
+  --control-border-focus: rgba(96, 165, 250, 0.9);
+  --control-option-bg: #16233d;
   --transition: all 0.3s ease;
 }
 
@@ -25,11 +29,106 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
   font-size: 16px;
   line-height: 1.5;
+  min-height: 100%;
+  overflow-x: hidden;
+  color-scheme: dark;
 }
 
 #root {
-  display: flex;
+  display: block;
   min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--light-text);
+  text-transform: capitalize;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 14px;
+  background: var(--control-bg);
+  border: 1px solid var(--dark-border);
+  border-radius: 8px;
+  color: var(--light-text);
+  transition: var(--transition);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--secondary-text);
+}
+
+.form-group input:hover:not(:focus),
+.form-group select:hover:not(:focus),
+.form-group textarea:hover:not(:focus) {
+  background: var(--control-bg-hover);
+  border-color: rgba(96, 165, 250, 0.45);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--control-border-focus);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 44px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--secondary-text) 50%), linear-gradient(135deg, var(--secondary-text) 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(50% - 2px), calc(100% - 14px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.form-group select option {
+  background: var(--control-option-bg);
+  color: var(--light-text);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.form-actions .btn {
+  flex: 1 1 180px;
 }
 
 @keyframes fadeIn {
@@ -60,5 +159,18 @@ html, body {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    flex-basis: 100%;
   }
 }

@@ -12,13 +12,8 @@ function AccessControl() {
   const [accessList, setAccessList] = useState([])
   const [selectedPerson, setSelectedPerson] = useState(null)
   const [newAccessLevel, setNewAccessLevel] = useState('')
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchAccessData()
-  }, [])
-
-  const fetchAccessData = async () => {
+  async function fetchAccessData() {
     try {
       const response = await accessControlAPI.getAll()
       if (response.success) {
@@ -26,10 +21,16 @@ function AccessControl() {
       }
     } catch (err) {
       console.error('Error fetching access control data:', err)
-    } finally {
-      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchAccessData()
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   const handleUpdateAccess = async () => {
     if (!selectedPerson || !newAccessLevel) return

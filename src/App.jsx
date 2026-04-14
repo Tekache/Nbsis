@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import AuthContext from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -14,33 +14,65 @@ import IncidentReporting from './pages/IncidentReporting'
 import Alerts from './pages/Alerts'
 import Settings from './pages/Settings'
 
-function App() {
-  const [authState, setAuthState] = useState({
-    isAuthenticated: false,
-    user: null,
-    token: null,
-  })
+const normalizeAuthUser = (user) => {
+  if (!user) return null
 
-  useEffect(() => {
-    // Check if user is already logged in
+  const fullName = user.full_name || user.name || ''
+
+  return {
+    ...user,
+    full_name: fullName,
+    name: fullName,
+  }
+}
+
+function App() {
+  const [authState, setAuthState] = useState(() => {
+    if (typeof window === 'undefined') {
+      return {
+        isAuthenticated: false,
+        user: null,
+        token: null,
+      }
+    }
+
     const storedToken = localStorage.getItem('authToken')
     const storedUser = localStorage.getItem('authUser')
-    
-    if (storedToken && storedUser) {
-      setAuthState({
-        isAuthenticated: true,
-        user: JSON.parse(storedUser),
-        token: storedToken,
-      })
+
+    if (!storedToken || !storedUser) {
+      return {
+        isAuthenticated: false,
+        user: null,
+        token: null,
+      }
     }
-  }, [])
+
+    try {
+      const parsedUser = normalizeAuthUser(JSON.parse(storedUser))
+      return {
+        isAuthenticated: true,
+        user: parsedUser,
+        token: storedToken,
+      }
+    } catch {
+      localStorage.removeItem('authToken')
+      localStorage.removeItem('authUser')
+      return {
+        isAuthenticated: false,
+        user: null,
+        token: null,
+      }
+    }
+  })
 
   const login = (user, token) => {
+    const normalizedUser = normalizeAuthUser(user)
+
     localStorage.setItem('authToken', token)
-    localStorage.setItem('authUser', JSON.stringify(user))
+    localStorage.setItem('authUser', JSON.stringify(normalizedUser))
     setAuthState({
       isAuthenticated: true,
-      user,
+      user: normalizedUser,
       token,
     })
   }

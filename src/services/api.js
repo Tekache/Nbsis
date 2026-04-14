@@ -1,15 +1,33 @@
 const LOCAL_API_BASE_URL = 'http://localhost:8000/api'
 const DEPLOYED_API_BASE_URL = 'https://nbsis.onrender.com/api'
 
+const normalizeBaseUrl = (url) => String(url || '').trim().replace(/\/+$/, '')
+const isLocalApiUrl = (url) =>
+  /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(url)
+const isLocalBrowser = () =>
+  typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+
 const resolveApiBaseUrl = () => {
-  if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) {
-    return import.meta.env.VITE_API_BASE_URL
+  const envBaseUrl =
+    typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL
+      ? normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL)
+      : ''
+
+  if (envBaseUrl) {
+    if (isLocalBrowser() || !isLocalApiUrl(envBaseUrl)) {
+      return envBaseUrl
+    }
+  }
+
+  if (isLocalBrowser()) {
+    return LOCAL_API_BASE_URL
   }
 
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return LOCAL_API_BASE_URL
+    if (hostname.endsWith('onrender.com')) {
+      return `${window.location.origin}/api`
     }
   }
 
@@ -68,20 +86,27 @@ async function apiRequest(endpoint, options = {}) {
       headers,
     })
 
-    const data = await response.json()
+    const contentType = response.headers.get('content-type') || ''
+    const data = contentType.includes('application/json')
+      ? await response.json()
+      : {}
 
     if (!response.ok) {
-      console.error('[v0] API Error:', { status: response.status, detail: data.detail })
-      throw new Error(data.detail || `API Error: ${response.status}`)
+      const detail =
+        (typeof data?.detail === 'string' && data.detail) ||
+        (typeof data?.message === 'string' && data.message) ||
+        `API Error: ${response.status}`
+
+      console.error('[v0] API Error:', { status: response.status, detail })
+      throw new Error(detail)
     }
 
     console.log('[v0] API Success:', data)
     return data
   } catch (error) {
-    const isNetworkError =
-      error.name === 'TypeError' && error.message === 'Failed to fetch'
+    const isNetworkError = error.name === 'TypeError'
     const friendlyMessage = isNetworkError
-      ? `Cannot reach backend at ${API_BASE_URL}. Is the FastAPI server running and accessible?`
+      ? `Cannot reach backend at ${API_BASE_URL}. Check backend startup and CORS FRONTEND_ORIGINS config.`
       : error.message
 
     console.error('[v0] API Exception:', friendlyMessage)

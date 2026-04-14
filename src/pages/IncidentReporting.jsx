@@ -18,13 +18,8 @@ function IncidentReporting() {
     severity: 'medium',
     location: '',
   })
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchIncidents()
-  }, [])
-
-  const fetchIncidents = async () => {
+  async function fetchIncidents() {
     try {
       const response = await incidentAPI.getAll()
       if (response.success) {
@@ -32,10 +27,16 @@ function IncidentReporting() {
       }
     } catch (err) {
       console.error('Error fetching incidents:', err)
-    } finally {
-      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchIncidents()
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target

@@ -115,4 +115,8 @@
   .alerts-controls {
     width: 100%;
   }
+
+  .alert-header {
+    flex-direction: column;
+  }
 }

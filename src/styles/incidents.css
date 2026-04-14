@@ -150,6 +150,21 @@
 }
 
 @media (max-width: 768px) {
+  .incident-header,
+  .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-row span {
+    text-align: left;
+  }
+
   .form-row {
     grid-template-columns: 1fr;
   }

@@ -52,6 +52,7 @@ Backend environment variables:
 - `DATABASE_NAME=shell_security`
 - `SECRET_KEY=<a long random secret>`
 - `FRONTEND_ORIGINS=<your Vercel frontend URL>`
+- `FRONTEND_ORIGIN_REGEX=^https://.*\\.vercel\\.app$` (optional but useful for preview deploys)
 
 After deployment, confirm these URLs work:
 

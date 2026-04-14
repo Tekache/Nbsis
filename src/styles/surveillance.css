@@ -129,4 +129,22 @@
   .cameras-grid {
     grid-template-columns: 1fr;
   }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .footage-placeholder {
+    padding: 24px 16px;
+  }
+
+  .placeholder-content {
+    font-size: 32px;
+  }
+
+  .footage-info {
+    grid-template-columns: 1fr;
+  }
 }

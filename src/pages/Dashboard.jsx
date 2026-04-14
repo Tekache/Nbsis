@@ -26,9 +26,9 @@ function Dashboard() {
         ])
 
         setStats({
-          activePersonnel: personnel.data.filter(p => p.status === 'active').length,
-          alertsUnread: alerts.data.filter(a => !a.read).length,
-          incidentsOpen: incidents.data.filter(i => i.status !== 'resolved').length,
+          activePersonnel: personnel.data.filter((p) => p.status === 'active').length,
+          alertsUnread: alerts.data.filter((a) => !a.read).length,
+          incidentsOpen: incidents.data.filter((i) => i.status !== 'resolved').length,
           systemStatus: 'online',
         })
       } catch (err) {
@@ -54,70 +54,75 @@ function Dashboard() {
   return (
     <div className="dashboard-layout">
       <Sidebar />
-      
+
       <div className="main-content">
-        <Header 
-          title="Dashboard" 
-          subtitle="System Overview & Key Metrics"
-        />
+        <Header title="Dashboard" subtitle="System Overview and Key Metrics" />
 
-        <div className="dashboard-grid">
-          <div className="stats-grid">
-            <StatCard 
-              icon="👥" 
-              label="Active Personnel" 
-              value={stats.activePersonnel}
-              bgColor="stat-personnel"
-            />
-            <StatCard 
-              icon="🔔" 
-              label="Unread Alerts" 
-              value={stats.alertsUnread}
-              bgColor="stat-alerts"
-            />
-            <StatCard 
-              icon="⚠️" 
-              label="Open Incidents" 
-              value={stats.incidentsOpen}
-              bgColor="stat-incidents"
-            />
-            <StatCard 
-              icon="🟢" 
-              label="System Status" 
-              value={stats.systemStatus}
-              bgColor="stat-system"
-            />
-          </div>
-
-          <div className="dashboard-sections">
+        <div className="page-content">
+          {loading ? (
             <Card>
-              <h2>System Overview</h2>
-              <div className="overview-list">
-                <div className="overview-item">
-                  <span className="overview-label">Surveillance Cameras:</span>
-                  <span className="overview-value">12 Online</span>
-                </div>
-                <div className="overview-item">
-                  <span className="overview-label">Access Points:</span>
-                  <span className="overview-value">8 Active</span>
-                </div>
-                <div className="overview-item">
-                  <span className="overview-label">Last System Check:</span>
-                  <span className="overview-value">5 minutes ago</span>
-                </div>
-              </div>
+              <h3>Loading dashboard data...</h3>
             </Card>
+          ) : (
+            <div className="dashboard-grid">
+              <div className="stats-grid">
+                <StatCard
+                  icon="P"
+                  label="Active Personnel"
+                  value={stats.activePersonnel}
+                  bgColor="stat-personnel"
+                />
+                <StatCard
+                  icon="A"
+                  label="Unread Alerts"
+                  value={stats.alertsUnread}
+                  bgColor="stat-alerts"
+                />
+                <StatCard
+                  icon="I"
+                  label="Open Incidents"
+                  value={stats.incidentsOpen}
+                  bgColor="stat-incidents"
+                />
+                <StatCard
+                  icon="S"
+                  label="System Status"
+                  value={stats.systemStatus}
+                  bgColor="stat-system"
+                />
+              </div>
 
-            <Card>
-              <h2>Quick Actions</h2>
-              <div className="quick-actions">
-                <button className="action-btn">View Live Surveillance</button>
-                <button className="action-btn">Report Incident</button>
-                <button className="action-btn">Manage Access</button>
-                <button className="action-btn">Check Alerts</button>
+              <div className="dashboard-sections">
+                <Card>
+                  <h2>System Overview</h2>
+                  <div className="overview-list">
+                    <div className="overview-item">
+                      <span className="overview-label">Surveillance Cameras:</span>
+                      <span className="overview-value">12 Online</span>
+                    </div>
+                    <div className="overview-item">
+                      <span className="overview-label">Access Points:</span>
+                      <span className="overview-value">8 Active</span>
+                    </div>
+                    <div className="overview-item">
+                      <span className="overview-label">Last System Check:</span>
+                      <span className="overview-value">5 minutes ago</span>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card>
+                  <h2>Quick Actions</h2>
+                  <div className="quick-actions">
+                    <button className="action-btn">View Live Surveillance</button>
+                    <button className="action-btn">Report Incident</button>
+                    <button className="action-btn">Manage Access</button>
+                    <button className="action-btn">Check Alerts</button>
+                  </div>
+                </Card>
               </div>
-            </Card>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

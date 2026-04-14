@@ -5,6 +5,7 @@
 
 .main-content {
   flex: 1;
+  min-width: 0;
   margin-left: 280px;
   display: flex;
   flex-direction: column;
@@ -14,6 +15,19 @@
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.content-header h2 {
+  margin: 0;
 }
 
 .dashboard-grid {
@@ -93,6 +107,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 12px 0;
   border-bottom: 1px solid var(--dark-border);
   font-size: 14px;
@@ -134,6 +149,10 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
   .main-content {
     margin-left: 0;
   }
@@ -142,12 +161,48 @@
     padding: 16px;
   }
 
+  .content-header {
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .content-header .btn {
+    width: 100%;
+  }
+
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
+  }
+
+  .dashboard-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .quick-actions {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    gap: 12px;
+  }
+
+  .stat-icon {
+    font-size: 26px;
+  }
+
+  .stat-value {
+    font-size: 20px;
   }
 }

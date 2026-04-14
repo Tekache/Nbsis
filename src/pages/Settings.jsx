@@ -1,16 +1,14 @@
 'use client';
 
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
 import Card from '../components/Card'
 import Button from '../components/Button'
-import AuthContext from '../context/AuthContext'
 import { settingsAPI } from '../services/api'
 import '../styles/settings.css'
 
 function Settings() {
-  const { authState } = useContext(AuthContext)
   const [profile, setProfile] = useState(null)
   const [editMode, setEditMode] = useState(false)
   const [passwordMode, setPasswordMode] = useState(false)
@@ -69,7 +67,7 @@ function Settings() {
       fetchProfile()
       setEditMode(false)
       setTimeout(() => setMessage(''), 3000)
-    } catch (err) {
+    } catch {
       setMessage('Error updating profile')
     }
   }
@@ -100,7 +98,7 @@ function Settings() {
       })
       setPasswordMode(false)
       setTimeout(() => setMessage(''), 3000)
-    } catch (err) {
+    } catch {
       setMessage('Error changing password')
     }
   }

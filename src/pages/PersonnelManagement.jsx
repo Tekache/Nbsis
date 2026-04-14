@@ -18,13 +18,8 @@ function PersonnelManagement() {
     department: '',
     status: 'active',
   })
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchPersonnel()
-  }, [])
-
-  const fetchPersonnel = async () => {
+  async function fetchPersonnel() {
     try {
       const response = await personnelAPI.getAll()
       if (response.success) {
@@ -32,10 +27,16 @@ function PersonnelManagement() {
       }
     } catch (err) {
       console.error('Error fetching personnel:', err)
-    } finally {
-      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchPersonnel()
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -137,11 +138,11 @@ function PersonnelManagement() {
                     onChange={handleInputChange}
                     required
                   >
-                    <option>Select Department</option>
-                    <option>Security</option>
-                    <option>Field Operations</option>
-                    <option>Monitoring</option>
-                    <option>Administration</option>
+                    <option value="">Select Department</option>
+                    <option value="Security">Security</option>
+                    <option value="Field Operations">Field Operations</option>
+                    <option value="Monitoring">Monitoring</option>
+                    <option value="Administration">Administration</option>
                   </select>
                 </div>
 

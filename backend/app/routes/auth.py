@@ -13,8 +13,11 @@ router = APIRouter()
 async def signup(user_data: UserSignup):
     database = get_database()
     users_col = database["users"]
+
+    normalized_email = user_data.email.strip().lower()
+    clean_full_name = " ".join(user_data.full_name.split())
     
-    existing_user = await users_col.find_one({"email": user_data.email})
+    existing_user = await users_col.find_one({"email": normalized_email})
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -24,8 +27,8 @@ async def signup(user_data: UserSignup):
     hashed_password = hash_password(user_data.password)
     
     new_user = {
-        "email": user_data.email,
-        "full_name": user_data.full_name,
+        "email": normalized_email,
+        "full_name": clean_full_name,
         "password_hash": hashed_password,
         "role": "user",
         "is_active": True,
@@ -38,7 +41,7 @@ async def signup(user_data: UserSignup):
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user_data.email},
+        data={"sub": normalized_email},
         expires_delta=access_token_expires,
     )
     
@@ -47,8 +50,8 @@ async def signup(user_data: UserSignup):
         token_type="bearer",
         user={
             "id": user_id,
-            "email": user_data.email,
-            "full_name": user_data.full_name,
+            "email": normalized_email,
+            "full_name": clean_full_name,
             "role": "user",
             "is_active": True,
         },
@@ -58,17 +61,25 @@ async def signup(user_data: UserSignup):
 async def login(credentials: UserLogin):
     database = get_database()
     users_col = database["users"]
+
+    normalized_email = credentials.email.strip().lower()
     
-    user = await users_col.find_one({"email": credentials.email})
+    user = await users_col.find_one({"email": normalized_email})
     if not user or not verify_password(credentials.password, user["password_hash"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password",
         )
+
+    if not user.get("is_active", True):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This account is inactive. Please contact support.",
+        )
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": credentials.email},
+        data={"sub": normalized_email},
         expires_delta=access_token_expires,
     )
     

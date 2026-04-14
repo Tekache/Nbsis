@@ -11,13 +11,8 @@ import '../styles/surveillance.css'
 function SurveillanceMonitoring() {
   const [cameras, setCameras] = useState([])
   const [selectedCamera, setSelectedCamera] = useState(null)
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchCameras()
-  }, [])
-
-  const fetchCameras = async () => {
+  async function fetchCameras() {
     try {
       const response = await surveillanceAPI.getCameras()
       if (response.success) {
@@ -25,10 +20,16 @@ function SurveillanceMonitoring() {
       }
     } catch (err) {
       console.error('Error fetching cameras:', err)
-    } finally {
-      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchCameras()
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   const handleViewFootage = async (camera) => {
     try {

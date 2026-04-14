@@ -11,13 +11,8 @@ import '../styles/alerts.css'
 function Alerts() {
   const [alerts, setAlerts] = useState([])
   const [filterUnread, setFilterUnread] = useState(false)
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchAlerts()
-  }, [])
-
-  const fetchAlerts = async () => {
+  async function fetchAlerts() {
     try {
       const response = await alertsAPI.getAll()
       if (response.success) {
@@ -25,10 +20,16 @@ function Alerts() {
       }
     } catch (err) {
       console.error('Error fetching alerts:', err)
-    } finally {
-      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fetchAlerts()
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   const handleMarkAsRead = async (id) => {
     try {

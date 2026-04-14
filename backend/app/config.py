@@ -1,6 +1,17 @@
-from pydantic_settings import BaseSettings
+from pathlib import Path
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=BASE_DIR / ".env",
+        extra="ignore",
+    )
+
     MONGODB_URL: str = "mongodb://localhost:27017"
     DATABASE_NAME: str = "shell_security"
     SECRET_KEY: str = "your-super-secret-key-change-this-in-production"
@@ -12,8 +23,10 @@ class Settings(BaseSettings):
         "http://localhost:5173,"
         "http://localhost:3000,"
         "http://127.0.0.1:5173,"
+        "http://localhost:4173,"
         "https://nbsis.vercel.app"
     )
+    FRONTEND_ORIGIN_REGEX: str | None = r"^https://.*\.vercel\.app$"
 
     @property
     def cors_origins(self) -> list[str]:
@@ -23,7 +36,5 @@ class Settings(BaseSettings):
             if origin.strip()
         ]
 
-    class Config:
-        env_file = ".env"
 
 settings = Settings()
